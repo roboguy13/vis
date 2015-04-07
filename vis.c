@@ -445,6 +445,8 @@ static bool cmd_saveas(Filerange*, enum CmdOpt, const char *argv[]);
 static bool cmd_filter(Filerange*, enum CmdOpt, const char *argv[]);
 /* switch to the previous/next saved state of the text, chronologically */
 static bool cmd_earlier_later(Filerange*, enum CmdOpt, const char *argv[]);
+/* dump active window as graphviz file */
+static bool cmd_dump(Filerange*, enum CmdOpt, const char *argv[]);
 
 static void action_reset(Action *a);
 static void switchmode_to(Mode *new_mode);
@@ -2191,6 +2193,12 @@ static bool cmd_earlier_later(Filerange *range, enum CmdOpt opt, const char *arg
 	editor_info_show(vis, "%s", buf);
 
 	return pos != EPOS;
+}
+
+static bool cmd_dump(Filerange *range, enum CmdOpt opt, const char *argv[]) {
+	if (!argv[1])
+		return false;
+	return text_dump(vis->win->file->text, argv[1]);
 }
 
 static Filepos parse_pos(char **cmd) {

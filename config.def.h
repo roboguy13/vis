@@ -64,6 +64,7 @@ static Command cmds[] = {
 	{ { "xit",                     }, cmd_xit,        CMD_OPT_FORCE },
 	{ { "earlier"                  }, cmd_earlier_later, CMD_OPT_NONE },
 	{ { "later"                    }, cmd_earlier_later, CMD_OPT_NONE },
+	{ { "dump",                    }, cmd_dump,       CMD_OPT_NONE  },
 	{ { "!",                       }, cmd_filter,     CMD_OPT_NONE  },
 	{ /* array terminator */                                        },
 };

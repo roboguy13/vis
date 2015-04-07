@@ -123,4 +123,5 @@ ssize_t text_range_write(Text*, Filerange*, int fd);
 /* release all ressources associated with this text instance */
 void text_free(Text*);
 
+bool text_dump(Text*, const char *filename);
 #endif
