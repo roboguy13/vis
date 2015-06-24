@@ -103,6 +103,8 @@ struct Action {
 	Change *change;         /* the most recent change */
 	Action *next;           /* the next (child) action in the undo tree */
 	Action *prev;           /* the previous (parent) operation in the undo tree */
+	Action *alt_prev;       /* the previous sibling node, chronologically */
+	Action *alt_next;       /* the next sibling node, chronologically */
 	Action *earlier;        /* the previous Action, chronologically */
 	Action *later;          /* the next Action, chronologically */
 	time_t time;            /* when the first change of this action was performed */
@@ -427,6 +429,14 @@ static Action *action_alloc(Text *txt) {
 		return new;
 	}
 
+	/* set sibling pointers */
+	if (txt->history->next) {
+		Action *last_alt = txt->history->next;
+		while (last_alt->alt_next)
+			last_alt = last_alt->alt_next;
+		new->alt_prev = last_alt;
+		last_alt->alt_next = new;
+	}
 	/* set prev, next pointers */
 	new->prev = txt->history;
 	txt->history->next = new;
